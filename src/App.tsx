@@ -1,4 +1,5 @@
 import "./App.css";
+import Body from "./components/Body";
 import MemeItem from "./components/MemeItem";
 
 //STEPS:
@@ -10,7 +11,7 @@ import MemeItem from "./components/MemeItem";
 function App() {
   return (
     <>
-      <MemeItem imgUrl="https://i.redd.it/8e1gs816ysrh1.png" title="Me_irl" />
+      <Body />
     </>
   );
 }
