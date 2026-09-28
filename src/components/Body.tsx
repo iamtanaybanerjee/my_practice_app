@@ -1,17 +1,21 @@
-import { useState, useEffect } from "react";
+import useFetch from "../hooks/useFetch";
+import MemeContainer from "./MemeContainer";
+import MemeItem from "./MemeItem";
+import ShimmerContainer from "./ShimmerContainer";
+
+export type Meme = {
+  url: string;
+  title: string;
+};
+
+export type MemeResponse = {
+  count: number;
+  memes: Meme[];
+};
 
 export default function Body() {
-  //const { memeList, setMemeList } = useState([]);
+  const data = useFetch<MemeResponse>("https://meme-api.com/gimme/20");
+  console.log(data);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    const response = await fetch("https://meme-api.com/gimme/5");
-    const data = await response.json();
-    console.log(data);
-  };
-
-  return <></>;
+  return <>{!data ? <ShimmerContainer /> : <MemeContainer data={data} />}</>;
 }
