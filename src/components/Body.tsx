@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import MemeContainer from "./MemeContainer";
 import MemeItem from "./MemeItem";
@@ -14,8 +15,38 @@ export type MemeResponse = {
 };
 
 export default function Body() {
-  const data = useFetch<MemeResponse>("https://meme-api.com/gimme/20");
-  console.log(data);
+  const [memes, setMemes] = useState<Meme[]>([]);
 
-  return <>{!data ? <ShimmerContainer /> : <MemeContainer data={data} />}</>;
+  const { data, fetchData } = useFetch<MemeResponse>(
+    "https://meme-api.com/gimme/20",
+  );
+
+  useEffect(() => {
+    if (data) {
+      setMemes((prev) => [...prev, ...data?.memes]);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    //add scroll event
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleScroll = () => {
+    if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
+      fetchData("https://meme-api.com/gimme/20");
+    }
+  };
+
+  return (
+    <>
+      {memes.length === 0 ? (
+        <ShimmerContainer />
+      ) : (
+        <MemeContainer data={{ count: memes.length, memes }} />
+      )}
+    </>
+  );
 }

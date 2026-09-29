@@ -18,5 +18,5 @@ export default function useFetch<T>(url: string) {
     }
   };
 
-  return data;
+  return { data, fetchData };
 }
