@@ -1,8 +1,3 @@
-//1. treat accordion as on selecting a comp, highlight it
-//2. build accordion items. Each of them will have a state of its own. Based on this state, the item will expand or contract.
-//3. selectedIndex = 0 --> global state
-//4. onClick --> handleSelect --> setSelectedIndex(index) --> if (selectedIndex === index) --> itemState(!itemState)
-
 import { useState } from "react";
 import AccrodionItem from "./AccordionItem";
 
@@ -40,7 +35,7 @@ export default function AccordionBody() {
     setSelectedIndex(selectedIndex === id ? -1 : id);
   };
   return (
-    <main>
+    <main className="flex flex-col px-20">
       {accordionItems.map((item) => (
         <AccrodionItem
           key={item.id}
